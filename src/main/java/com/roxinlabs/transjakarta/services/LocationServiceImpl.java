@@ -4,10 +4,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import javax.print.attribute.standard.DateTimeAtCompleted;
+import org.apache.log4j.Logger;
+import org.codehaus.jackson.map.ObjectMapper;
 
 import com.roxinlabs.transjakarta.model.Foursquare;
 import com.roxinlabs.transjakarta.model.Shelter;
+import com.roxinlabs.transjakarta.util.HttpRequestHelper;
 
 public class LocationServiceImpl implements LocationService {
 
@@ -35,9 +37,16 @@ public class LocationServiceImpl implements LocationService {
                 new SimpleDateFormat("yyyymmdd").format(new Date());
 		
 		try {
+			String response = HttpRequestHelper.sendGet(url);
 			
+			ObjectMapper mapper = new ObjectMapper();
+			Foursquare foursquare = mapper.readValue(response, Foursquare.class);
+			
+			return foursquare;
 		} catch (Exception e) {
-			// TODO: handle exception
+			Logger log = Logger.getLogger(LocationServiceImpl.class.getName());
+			
+			log.error(e.toString());
 		}
 		
 		return null;
