@@ -3,6 +3,9 @@ package com.roxinlabs.transjakarta.model.foursquare;
 
 import java.util.List;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Location{
    	private String address;
    	private String cc;
@@ -10,12 +13,13 @@ public class Location{
    	private String country;
    	private String crossStreet;
    	private List formattedAddress;
-   	private Number lat;
-   	private Number lng;
+   	private Double lat;
+   	private Double lng;
    	private String postalCode;
    	private String state;
 
- 	public String getAddress(){
+   	
+	public String getAddress(){
 		return this.address;
 	}
 	public void setAddress(String address){
@@ -51,16 +55,16 @@ public class Location{
 	public void setFormattedAddress(List formattedAddress){
 		this.formattedAddress = formattedAddress;
 	}
- 	public Number getLat(){
+ 	public Double getLat(){
 		return this.lat;
 	}
-	public void setLat(Number lat){
+	public void setLat(Double lat){
 		this.lat = lat;
 	}
- 	public Number getLng(){
+ 	public Double getLng(){
 		return this.lng;
 	}
-	public void setLng(Number lng){
+	public void setLng(Double lng){
 		this.lng = lng;
 	}
  	public String getPostalCode(){

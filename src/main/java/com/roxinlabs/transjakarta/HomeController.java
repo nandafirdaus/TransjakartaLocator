@@ -1,6 +1,10 @@
 package com.roxinlabs.transjakarta;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
@@ -8,10 +12,13 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.roxinlabs.transjakarta.model.Foursquare;
+import com.roxinlabs.transjakarta.model.SearchResult;
+import com.roxinlabs.transjakarta.model.foursquare.Venues;
 import com.roxinlabs.transjakarta.services.LocationService;
 import com.roxinlabs.transjakarta.services.LocationServiceImpl;
 
@@ -43,25 +50,23 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "/getFoursquare", method = RequestMethod.GET)
-	public @ResponseBody String getFoursquare(String query) {
+	public @ResponseBody List<SearchResult> getFoursquare(@RequestParam String term) throws UnsupportedEncodingException {
 		
-		try {
 			LocationService locationService = new LocationServiceImpl();
-			Foursquare foursquare = locationService.getLocationList(query);
+			System.out.println(URLEncoder.encode(term, "UTF-8"));
+			Foursquare foursquare = locationService.getLocationList(URLEncoder.encode(term, "UTF-8"));
+			List venues = foursquare.getResponse().getVenues();
 			
-			ObjectMapper mapper = new ObjectMapper();
-			return mapper.writeValueAsString(foursquare);
-		} catch (JsonGenerationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return "";
+			List<SearchResult> result = new ArrayList<SearchResult>();
+			
+			for (int i = 0; i < venues.size(); i++) {
+				Venues venue = (Venues)venues.get(i);
+				result.add(new SearchResult(venue.getName(), 
+						venue.getLocation().getLat(),
+						venue.getLocation().getLng(),
+						venue.getLocation().getAddress() == null ? "" : venue.getLocation().getAddress()));
+			}
+			
+			return result;
 	}
 }

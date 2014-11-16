@@ -3,20 +3,16 @@ package com.roxinlabs.transjakarta.model.foursquare;
 
 import java.util.List;
 
-public class Response{
-   	private Geocode geocode;
-   	private List venues;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
- 	public Geocode getGeocode(){
-		return this.geocode;
-	}
-	public void setGeocode(Geocode geocode){
-		this.geocode = geocode;
-	}
- 	public List getVenues(){
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class Response{
+   	private List<Venues> venues;
+
+ 	public List<Venues> getVenues(){
 		return this.venues;
 	}
-	public void setVenues(List venues){
+	public void setVenues(List<Venues> venues){
 		this.venues = venues;
 	}
 }

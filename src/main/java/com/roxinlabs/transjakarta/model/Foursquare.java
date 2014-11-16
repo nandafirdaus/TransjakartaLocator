@@ -1,19 +1,15 @@
 
 package com.roxinlabs.transjakarta.model;
 
-import com.roxinlabs.transjakarta.model.foursquare.Meta;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 import com.roxinlabs.transjakarta.model.foursquare.Response;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Foursquare{
-   	private Meta meta;
+	
    	private Response response;
 
- 	public Meta getMeta(){
-		return this.meta;
-	}
-	public void setMeta(Meta meta){
-		this.meta = meta;
-	}
  	public Response getResponse(){
 		return this.response;
 	}

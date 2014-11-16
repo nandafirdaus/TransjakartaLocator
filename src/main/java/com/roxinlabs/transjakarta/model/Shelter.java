@@ -5,6 +5,8 @@ public class Shelter {
 	private String Name;
 	private int Latitude;
 	private int Longitude;
+	
+	
 	public String getName() {
 		return Name;
 	}
