@@ -10,6 +10,8 @@ html, body, #map-canvas {
 	padding: 0;
 }
 </style>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/main.css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
 <script type="text/javascript"
 	src="https://maps.googleapis.com/maps/api/js">
 	
@@ -40,10 +42,10 @@ html, body, #map-canvas {
 											select : function(event, ui) {
 												$("#w-input-search").val(
 														ui.item.name);
-												$("#w-input-search-id").val(
-														ui.item.value);
-												$("#w-input-search-description")
-														.html(ui.item.desc);
+												$("#w-input-search-latitude").val(
+														ui.item.latitude);
+												$("#w-input-search-longitude").val(
+														ui.item.longitude);
 												return false;
 											}
 										}).autocomplete("instance")._renderItem = function(
@@ -55,24 +57,27 @@ html, body, #map-canvas {
 
 					});
 
-	// 	function initialize() {
-	// 		var mapOptions = {
-	// 			center : {
-	// 				lat : -34.397,
-	// 				lng : 150.644
-	// 			},
-	// 			zoom : 8
-	// 		};
-	// 		var map = new google.maps.Map(document.getElementById('map-canvas'),
-	// 				mapOptions);
-	// 	}
-	// 	google.maps.event.addDomListener(window, 'load', initialize);
+		function initialize() {
+			var mapOptions = {
+				center : {
+					lat : -34.397,
+					lng : 150.644
+				},
+				zoom : 8
+			};
+			var map = new google.maps.Map(document.getElementById('map-canvas'),
+					mapOptions);
+		}
+		google.maps.event.addDomListener(window, 'load', initialize);
 </script>
 
 </head>
 <body>
 	<div style="float: left; z-index: 0">
-		<input type="text" id="w-input-search" value=""> <span>
+		<input type="text" id="w-input-search" value="">
+		<input type="hidden" id="w-input-search-latitude">
+		<input type="hidden" id="w-input-search-longitude">
+		<span>
 			<button id="button-search" type="button">Search</button>
 		</span>
 	</div>
