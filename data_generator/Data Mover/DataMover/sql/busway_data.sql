@@ -19,8 +19,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `busway_data`
 --
-CREATE DATABASE IF NOT EXISTS `busway_data` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `busway_data`;
+CREATE DATABASE IF NOT EXISTS `buswaydb` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `buswaydb`;
 
 -- --------------------------------------------------------
 
