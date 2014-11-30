@@ -9,6 +9,7 @@ import java.util.List;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.roxinlabs.transjakarta.model.Foursquare;
 import com.roxinlabs.transjakarta.model.SearchResult;
+import com.roxinlabs.transjakarta.model.Shelter;
 import com.roxinlabs.transjakarta.model.foursquare.Venues;
 import com.roxinlabs.transjakarta.services.LocationService;
 import com.roxinlabs.transjakarta.services.LocationServiceImpl;
@@ -27,6 +29,9 @@ import com.roxinlabs.transjakarta.services.LocationServiceImpl;
  */
 @Controller
 public class HomeController {
+	
+	@Autowired
+	LocationService locationService;
 	
 	/**
 	 * Home Controller
@@ -68,5 +73,11 @@ public class HomeController {
 			}
 			
 			return result;
+	}
+	
+	@RequestMapping(value = "/getNearest", method = RequestMethod.GET)
+	public @ResponseBody List<Shelter> getNearest(@RequestParam String latitude, @RequestParam String longitude) {
+		return locationService.getNearest(Double.parseDouble(latitude), Double.parseDouble(longitude));
+		
 	}
 }

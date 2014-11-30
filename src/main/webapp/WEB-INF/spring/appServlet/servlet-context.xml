@@ -31,4 +31,8 @@
 		<beans:property name="password" value="" />
 	</beans:bean>
 	
+	<!-- declare beans -->
+	<beans:bean id="shelterDAO" class="com.roxinlabs.transjakarta.dao.ShelterDAOImpl" />
+	<beans:bean id="locationService" class="com.roxinlabs.transjakarta.services.LocationServiceImpl" />
+	
 </beans:beans>

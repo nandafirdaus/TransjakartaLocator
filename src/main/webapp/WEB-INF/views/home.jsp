@@ -47,16 +47,29 @@ html, body, #map {
 		$("#w-button-search").click(function() {
 			var latitude = $('#w-input-search-latitude').val();
 			var longitude = $('#w-input-search-longitude').val();
-			showMap(latitude, longitude);
+			
+			$.getJSON("${pageContext.request.contextPath}/getNearest",
+			{
+				{latitude : $('#w-input-search-latitude').val(),
+				longitude : $('#w-input-search-longitude').val()}
+			},
+			function (data) {
+				
+				var data = JSON.stringify(data);
+				var json = JSON.parse(data);
+				
+				showMap(json["name"], json["latitude"], json["longitude"]);
 
+			});
+			
 		});
 		
-		function showMap(latitude, longitude) {
+		function showMap(title, latitude, longitude) {
 
 			var googleLatandLong = new google.maps.LatLng(latitude, longitude);
 
 			var mapOptions = {
-				zoom : 5,
+				zoom : 15,
 				center : googleLatandLong,
 				mapTypeId : google.maps.MapTypeId.ROADMAP
 			};

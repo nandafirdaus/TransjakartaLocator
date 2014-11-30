@@ -9,5 +9,5 @@ public interface LocationService {
 	
 	public Foursquare getLocationList(String query);
 	
-	public List<Shelter> getNearest(int lat, int lng);
+	public List<Shelter> getNearest(Double lat, Double lng);
 }
