@@ -61,8 +61,8 @@ public class DataMover {
                         .prepareStatement("insert into  buswaydb.shelters values (default, ?, ?, ?)");
                 // parameters start with 1
                 preparedStatement.setString(1, temp[0]);
-                preparedStatement.setInt(2, Integer.parseInt(temp[1]));
-                preparedStatement.setInt(3, Integer.parseInt(temp[2]));
+                preparedStatement.setInt(2, Integer.parseInt(temp[2]));
+                preparedStatement.setInt(3, Integer.parseInt(temp[1]));
                 preparedStatement.executeUpdate();
             }
         } catch (IOException ex) {

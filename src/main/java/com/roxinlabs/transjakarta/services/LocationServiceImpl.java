@@ -71,8 +71,8 @@ public class LocationServiceImpl implements LocationService {
 		Double distance2 = Double.MAX_VALUE;
 		
 		for (Shelter shelter : listShelter) {
-			double tempDistance = Math.sqrt(Math.pow(shelter.getLatitude()/1E6, 2) 
-					+ Math.pow(shelter.getLongitude()/1E6, 2));
+			double tempDistance = Math.sqrt(Math.pow(shelter.getLatitude() - lat, 2) 
+					+ Math.pow(shelter.getLongitude() - lng, 2));
 			
 			if (distance1 < distance2) {
 				

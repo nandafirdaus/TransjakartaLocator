@@ -21,18 +21,19 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="com.roxinlabs.transjakarta" />
-	
 	<!-- Database Configuration -->
 	<beans:bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<beans:property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<beans:property name="url" value="jdbc:mysql://localhost:3306/transjakarta_data" />
+		<beans:property name="url" value="jdbc:mysql://localhost:3306/buswaydb" />
 		<beans:property name="username" value="root" />
 		<beans:property name="password" value="" />
 	</beans:bean>
 	
 	<!-- declare beans -->
-	<beans:bean id="shelterDAO" class="com.roxinlabs.transjakarta.dao.ShelterDAOImpl" />
+	<beans:bean id="shelterDAO" class="com.roxinlabs.transjakarta.dao.ShelterDAOImpl" >
+		<beans:constructor-arg name="dataSource" ref="dataSource"></beans:constructor-arg>
+	</beans:bean>
 	<beans:bean id="locationService" class="com.roxinlabs.transjakarta.services.LocationServiceImpl" />
-	
+		
+	<context:component-scan base-package="com.roxinlabs.transjakarta" />
 </beans:beans>

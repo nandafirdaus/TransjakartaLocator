@@ -31,7 +31,7 @@ import com.roxinlabs.transjakarta.services.LocationServiceImpl;
 public class HomeController {
 	
 	@Autowired
-	LocationService locationService;
+	private LocationService locationService;
 	
 	/**
 	 * Home Controller
@@ -45,15 +45,7 @@ public class HomeController {
 		
 		return model;
 	}
-	
-	@RequestMapping(value="/getNearest", method = RequestMethod.GET)
-	public @ResponseBody String getNearest(double lat, double lng) {
 		
-		
-		
-		return "";
-	}
-	
 	@RequestMapping(value = "/getFoursquare", method = RequestMethod.GET)
 	public @ResponseBody List<SearchResult> getFoursquare(@RequestParam String term) throws UnsupportedEncodingException {
 		

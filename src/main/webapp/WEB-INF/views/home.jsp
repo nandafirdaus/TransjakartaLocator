@@ -50,35 +50,38 @@ html, body, #map {
 			
 			$.getJSON("${pageContext.request.contextPath}/getNearest",
 			{
-				{latitude : $('#w-input-search-latitude').val(),
-				longitude : $('#w-input-search-longitude').val()}
+				latitude : $('#w-input-search-latitude').val(),
+				longitude : $('#w-input-search-longitude').val()
 			},
 			function (data) {
 				
 				var data = JSON.stringify(data);
 				var json = JSON.parse(data);
 				
-				showMap(json["name"], json["latitude"], json["longitude"]);
+				showMap(json);
 
 			});
 			
 		});
 		
-		function showMap(title, latitude, longitude) {
+		function showMap(shelter) {
 
-			var googleLatandLong = new google.maps.LatLng(latitude, longitude);
-
+			var shelter1 = shelter[0];
+			var shelter2 = shelter[1];
+			var googleLatandLong1 = new google.maps.LatLng(shelter1['latitude'], shelter1['longitude']);
+			var googleLatandLong2 = new google.maps.LatLng(shelter2['latitude'], shelter2['longitude']);
+			
 			var mapOptions = {
 				zoom : 15,
-				center : googleLatandLong,
+				center : googleLatandLong1,
 				mapTypeId : google.maps.MapTypeId.ROADMAP
 			};
 
 			var mapDiv = document.getElementById("map");
 			map = new google.maps.Map(mapDiv, mapOptions);
 
-			var title = $('#w-input-search').val();
-			addMarker(map, googleLatandLong, title, "");
+			addMarker(map, googleLatandLong1, shelter1['name'], shelter1['name']);
+			addMarker(map, googleLatandLong2, shelter2['name'], shelter2['name']);
 
 		}
 

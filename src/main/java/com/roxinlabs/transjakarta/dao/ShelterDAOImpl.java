@@ -14,11 +14,9 @@ import com.roxinlabs.transjakarta.model.Shelter;
 
 public class ShelterDAOImpl implements ShelterDAO {
 
-	@Autowired
-	private DataSource dataSource;
 	private JdbcTemplate jdbcTemplate;
 	
-	public ShelterDAOImpl() {
+	public ShelterDAOImpl(DataSource dataSource) {
 		jdbcTemplate = new JdbcTemplate(dataSource);
 	}
 	
@@ -42,7 +40,7 @@ public class ShelterDAOImpl implements ShelterDAO {
 
 	@Override
 	public List<Shelter> list() {
-		String sql = "SELECT * FROM shelter";
+		String sql = "SELECT * FROM shelters";
 		
 		List<Shelter> listShelter = jdbcTemplate.query(sql, new RowMapper<Shelter>() {
 
