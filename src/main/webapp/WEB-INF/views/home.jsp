@@ -70,6 +70,7 @@ html, body, #map {
 			var shelter2 = shelter[1];
 			var googleLatandLong1 = new google.maps.LatLng(shelter1['latitude'], shelter1['longitude']);
 			var googleLatandLong2 = new google.maps.LatLng(shelter2['latitude'], shelter2['longitude']);
+			var googleLatandLong3 = new google.maps.LatLng($('#w-input-search-latitude').val(), $('#w-input-search-longitude').val());
 			
 			var mapOptions = {
 				zoom : 15,
@@ -82,7 +83,14 @@ html, body, #map {
 
 			addMarker(map, googleLatandLong1, shelter1['name'], shelter1['name']);
 			addMarker(map, googleLatandLong2, shelter2['name'], shelter2['name']);
-
+			addMarker(map, googleLatandLong3, $('#w-input-search').val(), $('#w-input-search').val());
+			
+			var latlngbounds = new google.maps.LatLngBounds();
+			latlngbounds.extend(googleLatandLong1);
+			latlngbounds.extend(googleLatandLong2);
+			latlngbounds.extend(googleLatandLong3);
+			
+			map.fitBounds(latlngbounds);
 		}
 
 		function addMarker(map, latlong, title, content) {
@@ -103,10 +111,10 @@ html, body, #map {
 	function initialize() {
 		var mapOptions = {
 			center : {
-				lat : -34.397,
-				lng : 150.644
+				lat : -6.2297465,
+				lng : 106.829518
 			},
-			zoom : 8
+			zoom : 11
 		};
 		var map = new google.maps.Map(document.getElementById('map'), mapOptions);
 	}
