@@ -29,47 +29,53 @@ import com.roxinlabs.transjakarta.services.LocationServiceImpl;
  */
 @Controller
 public class HomeController {
-	
+
 	@Autowired
 	private LocationService locationService;
-	
+
 	/**
 	 * Home Controller
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView home() {
-		
+
 		ModelAndView model = new ModelAndView();
-		
+
 		model.setViewName("home");
-		
+
 		return model;
 	}
-		
+
 	@RequestMapping(value = "/getFoursquare", method = RequestMethod.GET)
-	public @ResponseBody List<SearchResult> getFoursquare(@RequestParam String term) throws UnsupportedEncodingException {
-		
-			LocationService locationService = new LocationServiceImpl();
-			System.out.println(URLEncoder.encode(term, "UTF-8"));
-			Foursquare foursquare = locationService.getLocationList(URLEncoder.encode(term, "UTF-8"));
-			List venues = foursquare.getResponse().getVenues();
-			
-			List<SearchResult> result = new ArrayList<SearchResult>();
-			
-			for (int i = 0; i < venues.size(); i++) {
-				Venues venue = (Venues)venues.get(i);
-				result.add(new SearchResult(venue.getName(), 
-						venue.getLocation().getLat(),
-						venue.getLocation().getLng(),
-						venue.getLocation().getAddress() == null ? "" : venue.getLocation().getAddress()));
+	public @ResponseBody List<SearchResult> getFoursquare(
+			@RequestParam String term) throws UnsupportedEncodingException {
+
+		LocationService locationService = new LocationServiceImpl();
+		System.out.println(URLEncoder.encode(term, "UTF-8"));
+		Foursquare foursquare = locationService.getLocationList(URLEncoder
+				.encode(term, "UTF-8"));
+		List venues = foursquare.getResponse().getVenues();
+
+		List<SearchResult> result = new ArrayList<SearchResult>();
+
+		for (int i = 0; i < venues.size(); i++) {
+			Venues venue = (Venues) venues.get(i);
+			if (venue.getLocation().getAddress() != null) {
+				result.add(new SearchResult(venue.getName(), venue
+						.getLocation().getLat(), venue.getLocation().getLng(),
+						venue.getLocation().getAddress() == null ? "" : venue
+								.getLocation().getAddress()));
 			}
-			
-			return result;
+		}
+
+		return result;
 	}
-	
+
 	@RequestMapping(value = "/getNearest", method = RequestMethod.GET)
-	public @ResponseBody List<Shelter> getNearest(@RequestParam String latitude, @RequestParam String longitude) {
-		return locationService.getNearest(Double.parseDouble(latitude), Double.parseDouble(longitude));
-		
+	public @ResponseBody List<Shelter> getNearest(
+			@RequestParam String latitude, @RequestParam String longitude) {
+		return locationService.getNearest(Double.parseDouble(latitude),
+				Double.parseDouble(longitude));
+
 	}
 }
